@@ -18,7 +18,7 @@ addon.settings.durability = {
 	
 	font 				= font,
 	font_size 			= 12,
-	position 			= {'BOTTOMRIGHT', Gold, 'TOPRIGHT', 0, 5},
+	position 			= {'BOTTOMRIGHT', Gold, 'TOPRIGHT', 0, 3},
 	tooltip_position 	= {'ANCHOR_TOP', 0, 6},
 	class_color 		= true,
 }
@@ -51,7 +51,7 @@ addon.settings.gold = {
 	
 	font 				= font,
 	font_size 			= 12,
-	position 			= {'BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', -5, 20},
+	position 			= {'BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', -5, 3},
 	tooltip_position 	= {'ANCHOR_TOP', 0, 6},
 	class_color 		= true,
 }
@@ -62,18 +62,18 @@ addon.settings.memory = {
 	
 	font 				= font,
 	font_size 			= 12,
-	position 			= {'BOTTOMRIGHT', Durability, 'TOPRIGHT', 0, 5},
+	position 			= {'BOTTOMRIGHT', Durability, 'TOPRIGHT', 0, 3},
 	tooltip_position 	= {'ANCHOR_TOP', 0, 6},
 	class_color 		= true,
 }
 
--- Displays framerate and memory usage
+-- Displays framerate and latency
 addon.settings.fps = {
 	enable 				= true,
 	
 	font 				= font,
 	font_size 			= 12,
-	position 			= {'BOTTOMRIGHT', Memory, 'TOPRIGHT', 0, 5},
+	position 			= {'BOTTOMRIGHT', Memory, 'TOPRIGHT', 0, 3},
 	tooltip_position 	= {'ANCHOR_TOP', 0, 6},
 	class_color 		= true,
 }

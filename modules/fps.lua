@@ -76,7 +76,7 @@ local function Update(self, t)
 		int2 = 10
 	end
 	if int < 0 then
-		Text:SetText(floor(GetFramerate()).." |cfffffffffps &|r"..select(3, GetNetStats()).."|cffffffffms|r")
+		Text:SetText(floor(GetFramerate()).." |cfffffffffps &|r "..select(3, GetNetStats()).." |cffffffffms|r")
 		int = 1
 	end	
 end
