@@ -82,8 +82,8 @@ local function Update(self, t)
 end
 
 Stat:SetScript("OnMouseDown", function() collectgarbage("collect") Update(Stat, 20) end)
+Stat:SetScript("OnUpdate", Update)
 if not addon.settings.memory.enable then -- Disable tooltip if the memory module is active
-	Stat:SetScript("OnUpdate", Update) 
 	Stat:SetScript("OnEnter", function(self)
 		if not InCombatLockdown() then
 			GameTooltip:SetOwner(self, unpack(addon.settings.fps.tooltip_position));
