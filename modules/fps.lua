@@ -82,24 +82,26 @@ local function Update(self, t)
 end
 
 Stat:SetScript("OnMouseDown", function() collectgarbage("collect") Update(Stat, 20) end)
-Stat:SetScript("OnUpdate", Update) 
-Stat:SetScript("OnEnter", function(self)
-	if not InCombatLockdown() then
-		GameTooltip:SetOwner(self, unpack(addon.settings.fps.tooltip_position));
-		GameTooltip:ClearAllPoints()
-		GameTooltip:SetPoint("BOTTOM", self, "TOP", 0, 0)
-		GameTooltip:ClearLines()
-		GameTooltip:AddDoubleLine("Total Memory Usage:", formatMem(Total), 0.69, 0.31, 0.31,0.84, 0.75, 0.65)
-		GameTooltip:AddLine(" ")
-		for i = 1, #Memory do
-			if Memory[i][3] then 
-				local red = Memory[i][2]/Total*2
-				local green = 1 - red
-				GameTooltip:AddDoubleLine(Memory[i][1], formatMem(Memory[i][2], false), 1, 1, 1, red, green+1, 0)						
+if not addon.settings.memory.enable then -- Disable tooltip if the memory module is active
+	Stat:SetScript("OnUpdate", Update) 
+	Stat:SetScript("OnEnter", function(self)
+		if not InCombatLockdown() then
+			GameTooltip:SetOwner(self, unpack(addon.settings.fps.tooltip_position));
+			GameTooltip:ClearAllPoints()
+			GameTooltip:SetPoint("BOTTOM", self, "TOP", 0, 0)
+			GameTooltip:ClearLines()
+			GameTooltip:AddDoubleLine("Total Memory Usage:", formatMem(Total), 0.69, 0.31, 0.31,0.84, 0.75, 0.65)
+			GameTooltip:AddLine(" ")
+			for i = 1, #Memory do
+				if Memory[i][3] then 
+					local red = Memory[i][2]/Total*2
+					local green = 1 - red
+					GameTooltip:AddDoubleLine(Memory[i][1], formatMem(Memory[i][2], false), 1, 1, 1, red, green+1, 0)						
+				end
 			end
+			GameTooltip:Show()
 		end
-		GameTooltip:Show()
-	end
-end)
-Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	end)
+	Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)
+end
 Update(Stat, 20)
