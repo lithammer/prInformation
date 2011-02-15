@@ -61,7 +61,7 @@ local function OnEvent(self, event)
 	if (prInformationData.gold == nil) then prInformationData.gold = {} end
 	if (prInformationData.gold[myPlayerRealm]==nil) then prInformationData.gold[myPlayerRealm]={} end
 	prInformationData.gold[myPlayerRealm][myPlayerName] = GetMoney()
-			
+
 	OldMoney = NewMoney
 end
 
@@ -83,9 +83,9 @@ Stat:SetScript('OnEnter', function(self)
 		GameTooltip:AddLine('Session: ')
 		GameTooltip:AddDoubleLine('Earned:', formatMoney(Profit), 1, 1, 1, 1, 1, 1)
 		GameTooltip:AddDoubleLine('Spent:', formatMoney(Spent), 1, 1, 1, 1, 1, 1)
-		if Profit < Spent then
+		if (Profit < Spent) then
 			GameTooltip:AddDoubleLine('Deficit:', formatMoney(Profit-Spent), 1, 0, 0, 1, 1, 1)
-		elseif (Profit-Spent)>0 then
+		elseif (Profit - Spent) > 0 then
 			GameTooltip:AddDoubleLine('Profit:', formatMoney(Profit-Spent), 0, 1, 0, 1, 1, 1)
 		end				
 		GameTooltip:AddLine(' ')					
@@ -93,9 +93,9 @@ Stat:SetScript('OnEnter', function(self)
 		local totalGold = 0				
 		GameTooltip:AddLine('Character: ')			
 		local thisRealmList = prInformationData.gold[myPlayerRealm]
-		for k,v in pairs(thisRealmList) do
+		for k, v in pairs(thisRealmList) do
 			GameTooltip:AddDoubleLine(k, FormatTooltipMoney(v), 1, 1, 1, 1, 1, 1)
-			totalGold=totalGold+v
+			totalGold = totalGold + v
 		end 
 		GameTooltip:AddLine(' ')
 		GameTooltip:AddLine('Server: ')
