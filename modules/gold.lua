@@ -24,7 +24,7 @@ local function OnEvent(self, event)
 	if event == 'PLAYER_ENTERING_WORLD' then
 		OldMoney = GetMoney()
 	end
-	
+
 	local NewMoney = GetMoney()
 	local Change = NewMoney - OldMoney -- Positive if we gain money
 	
@@ -33,12 +33,11 @@ local function OnEvent(self, event)
 	else							-- Gained Moeny
 		Profit = Profit + Change
 	end
-	
+
 	Text:SetText(GetCoinTextureString(NewMoney, settings.font_size))
 	-- Setup Money Tooltip
 	self:SetAllPoints(Text)
 
-	local myPlayerName = UnitName('player')				
 	if (prInformationData == nil) then
 		prInformationData = {}
 	end
@@ -47,10 +46,11 @@ local function OnEvent(self, event)
 		prInformationData.gold = {}
 	end
 
-	if (prInformationData.gold[myPlayerRealm]==nil) then
-		prInformationData.gold[myPlayerRealm]={}
+	if (prInformationData.gold[myPlayerRealm] == nil) then
+		prInformationData.gold[myPlayerRealm] = {}
 	end
 
+	local myPlayerName = UnitName('player')
 	prInformationData.gold[myPlayerRealm][myPlayerName] = GetMoney()
 
 	OldMoney = NewMoney
@@ -80,11 +80,11 @@ Stat:SetScript('OnEnter', function(self)
 		elseif (Profit - Spent) > 0 then
 			GameTooltip:AddDoubleLine('Profit:', GetCoinTextureString(Profit - Spent), 0, 1, 0, 1, 1, 1)
 		end
-		GameTooltip:AddLine(' ')					
-	
-		local totalGold = 0				
-		GameTooltip:AddLine('Character: ')			
+		GameTooltip:AddLine(' ')
+
+		GameTooltip:AddLine('Character: ')
 		local thisRealmList = prInformationData.gold[myPlayerRealm]
+		local totalGold = 0
 
 		for k, v in pairs(thisRealmList) do
 			GameTooltip:AddDoubleLine(k, GetCoinTextureString(v), 1, 1, 1, 1, 1, 1)
