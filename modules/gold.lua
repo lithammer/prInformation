@@ -76,7 +76,7 @@ Stat:SetScript('OnEnter', function(self)
 		GameTooltip:AddDoubleLine('Spent:', GetCoinTextureString(Spent), 1, 1, 1, 1, 1, 1)
 
 		if (Profit < Spent) then
-			GameTooltip:AddDoubleLine('Deficit:', GetCoinTextureString(Profit - Spent), 1, 0, 0, 1, 1, 1)
+			GameTooltip:AddDoubleLine('Deficit:', '-'..GetCoinTextureString(Spent - Profit), 1, 0, 0, 1, 1, 1)
 		elseif (Profit - Spent) > 0 then
 			GameTooltip:AddDoubleLine('Profit:', GetCoinTextureString(Profit - Spent), 0, 1, 0, 1, 1, 1)
 		end
