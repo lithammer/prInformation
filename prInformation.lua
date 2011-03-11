@@ -3,17 +3,17 @@ local addonName, addon = ...
 addon.settings = {}
 addon.stat = {}
 
-addon.stat.durability = CreateFrame('Frame')
-addon.stat.fps = CreateFrame('Frame')
-addon.stat.friend = CreateFrame('Frame')
-addon.stat.gold = CreateFrame('Frame')
-addon.stat.guild = CreateFrame('Frame')
-addon.stat.memory = CreateFrame('Frame')
+addon.stat.durability = CreateFrame('Frame', nil, UIParent)
+addon.stat.fps = CreateFrame('Frame', nil, UIParent)
+addon.stat.friend = CreateFrame('Frame', nil, UIParent)
+addon.stat.gold = CreateFrame('Frame', nil, UIParent)
+addon.stat.guild = CreateFrame('Frame', nil, UIParent)
+addon.stat.memory = CreateFrame('Frame', nil, UIParent)
 
 addon.ShortValue = function(v)
-	if v >= 1e6 then
+	if (v >= 1e6) then
 		return ('%.1fm'):format(v / 1e6):gsub('%.?0+([km])$', '%1')
-	elseif v >= 1e3 or v <= -1e3 then
+	elseif (v >= 1e3 or v <= -1e3) then
 		return ('%.1fk'):format(v / 1e3):gsub('%.?0+([km])$', '%1')
 	else
 		return v
