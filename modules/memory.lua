@@ -2,6 +2,8 @@ local addonName, addon = ...
 
 if not addon.settings.memory.enable then return end
 
+local settings = addon.settings.memory
+
 local Stat = addon.stat.memory
 Stat:RegisterEvent('PLAYER_ENTERING_WORLD')
 Stat:EnableMouse(true)
@@ -9,11 +11,11 @@ Stat:SetFrameStrata('BACKGROUND')
 Stat:SetFrameLevel(3)
 
 local Text  = Stat:CreateFontString(nil, 'OVERLAY')
-Text:SetFont(addon.settings.memory.font, addon.settings.memory.font_size)
-Text:SetPoint(unpack(addon.settings.memory.position))
+Text:SetFont(settings.font, settings.font_size)
+Text:SetPoint(unpack(settings.position))
 Text:SetShadowColor(0, 0, 0)
 Text:SetShadowOffset(1, -1)
-if addon.settings.memory.class_color then
+if settings.class_color then
 	local _, class = UnitClass('player')
 	Text:SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b )
 end
@@ -26,7 +28,7 @@ local megaByteString = '%.2f |cffffffffmb|r'
 
 local function formatMem(memory)
 	local mult = 10^1
-	if memory > 999 then
+	if (memory > 999) then
 		local mem = ((memory/1024) * mult) / mult
 		return string.format(megaByteString, mem)
 	else
@@ -55,11 +57,13 @@ local function UpdateMemory()
 	-- Load memory usage in table
 	local addOnMem = 0
 	local totalMemory = 0
+
 	for i = 1, #memoryTable do
 		addOnMem = GetAddOnMemoryUsage(memoryTable[i][1])
 		memoryTable[i][3] = addOnMem
 		totalMemory = totalMemory + addOnMem
 	end
+
 	-- Sort the table to put the largest addon on top
 	table.sort(memoryTable, function(a, b)
 		if a and b then
@@ -75,7 +79,7 @@ local int = 10
 local function Update(self, t)
 	int = int - t
 	
-	if int < 0 then
+	if (int < 0) then
 		RebuildAddonList(self)
 		local total = UpdateMemory()
 		Text:SetText(formatMem(total))
@@ -87,17 +91,21 @@ Stat:SetScript('OnMouseDown', function () collectgarbage('collect') Update(Stat,
 Stat:SetScript('OnEnter', function(self)
 	if not InCombatLockdown() then
 		self.tooltip = true
+
 		local bandwidth = GetAvailableBandwidth()
-		GameTooltip:SetOwner(self, unpack(addon.settings.memory.tooltip_position))
+		GameTooltip:SetOwner(self, unpack(settings.tooltip_position))
 		GameTooltip:ClearLines()
+
 		if bandwidth ~= 0 then
 			GameTooltip:AddDoubleLine('Bandwidth: ', string.format(bandwidthString, bandwidth), 0.69, 0.31, 0.31,0.84, 0.75, 0.65)
 			GameTooltip:AddDoubleLine('Download: ', string.format(percentageString, GetDownloadedPercentage() * 100), 0.69, 0.31, 0.31, 0.84, 0.75, 0.65)
 			GameTooltip:AddLine(' ')
 		end
+
 		local totalMemory = UpdateMemory()
 		GameTooltip:AddDoubleLine('Total Memory Usage:', formatMem(totalMemory), 0.69, 0.31, 0.31,0.84, 0.75, 0.65)
 		GameTooltip:AddLine(' ')
+
 		for i = 1, #memoryTable do
 			if (memoryTable[i][4]) then
 				local red = memoryTable[i][3] / totalMemory
@@ -105,6 +113,7 @@ Stat:SetScript('OnEnter', function(self)
 				GameTooltip:AddDoubleLine(memoryTable[i][2], formatMem(memoryTable[i][3]), 1, 1, 1, red, green + .5, 0)
 			end						
 		end
+
 		GameTooltip:Show()
 	end
 end)

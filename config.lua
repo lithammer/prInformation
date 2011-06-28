@@ -14,7 +14,7 @@ local font_size = 16
 
 -- Displays durability on equipped items
 addon.settings.durability = {
-	enable 				= true,
+	enable 				= false,
 
 	font 				= font,
 	font_size 			= font_size,
@@ -25,7 +25,7 @@ addon.settings.durability = {
 
 -- Shows online friends
 addon.settings.friend = {
-	enable 				= true,
+	enable 				= false,
 
 	font 				= font,
 	font_size 			= font_size,
@@ -36,7 +36,7 @@ addon.settings.friend = {
 
 -- Shows online guild members, right-click to send a whisper or invite
 addon.settings.guild = {
-	enable 				= true,
+	enable 				= false,
 
 	font 				= font,
 	font_size 			= font_size,
@@ -62,7 +62,7 @@ addon.settings.memory = {
 
 	font 				= font,
 	font_size 			= font_size,
-	position 			= {'BOTTOMRIGHT', Durability, 'TOPRIGHT', 0, 3},
+	position 			= {'BOTTOMRIGHT', Gold, 'TOPRIGHT', 0, 3},
 	tooltip_position 	= {'ANCHOR_TOP', 0, 6},
 	class_color 		= true,
 }
