@@ -30,7 +30,9 @@ local nameRankString = '%s |cff999999-|cffffffff %s'
 local noteString = "  '%s'"
 local officerNoteString = "  o: '%s'"
 
-local guildTable, guildXP, guildMotD = {}, {}, ''
+local guildTable = {}
+local guildXP = {}
+local guildMotD = ''
 local totalOnline = 0
 
 local function BuildGuildTable()
@@ -50,13 +52,18 @@ local function BuildGuildTable()
 end
 
 local function UpdateGuildXP()
-	local currentXP, remainingXP, dailyXP, maxDailyXP = UnitGetGuildXP('player')
+	local currentXP, remainingXP = UnitGetGuildXP('player')
 	local nextLevelXP = currentXP + remainingXP
+	if (nextLevelXP == 0) then
+		nextLevelXP = 1
+	end
 	local percentTotal = tostring(math.ceil((currentXP / nextLevelXP) * 100))
-	local percentDaily = tostring(math.ceil((dailyXP / maxDailyXP) * 100))
 	
-	guildXP[0] = { currentXP, nextLevelXP, percentTotal }
-	guildXP[1] = { dailyXP, maxDailyXP, percentDaily }
+	guildXP = {
+		currentXP,
+		nextLevelXP,
+		percentTotal
+	}
 end
 
 local function UpdateGuildMessage()
@@ -171,10 +178,8 @@ Stat:SetScript('OnEnter', function(self)
 	local col = addon.RGBToHex(ttsubh.r, ttsubh.g, ttsubh.b)
 	GameTooltip:AddLine' '
 	if GetGuildLevel() ~= 25 then
-		local currentXP, nextLevelXP, percentTotal = unpack(guildXP[0])
-		local dailyXP, maxDailyXP, percentDaily = unpack(guildXP[1])
+		local currentXP, nextLevelXP, percentTotal = unpack(guildXP)
 		GameTooltip:AddLine(string.format(col..GUILD_EXPERIENCE_CURRENT, '|r |cFFFFFFFF'..addon.ShortValue(currentXP), addon.ShortValue(nextLevelXP), percentTotal))
-		GameTooltip:AddLine(string.format(col..GUILD_EXPERIENCE_DAILY, '|r |cFFFFFFFF'..addon.ShortValue(dailyXP), addon.ShortValue(maxDailyXP), percentDaily))
 	end
 	
 	local _, _, standingID, barMin, barMax, barValue = GetGuildFactionInfo()
