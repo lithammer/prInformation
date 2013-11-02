@@ -18,7 +18,7 @@ Text:SetShadowOffset(1, -1)
 local Profit = 0
 local Spent	= 0
 local OldMoney = 0
-local myPlayerRealm = GetCVar('realmName')
+local myPlayerRealm = GetRealmName()
 
 local function OnEvent(self, event)
 	if event == 'PLAYER_ENTERING_WORLD' then
